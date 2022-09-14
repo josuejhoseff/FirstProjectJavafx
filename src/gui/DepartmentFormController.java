@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListeners;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
+import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
@@ -55,6 +58,9 @@ public class DepartmentFormController implements Initializable {
 			notifyDataChangeListener();
 			Utils.currentStage(event).close();
 		}
+		catch(ValidationException e) {
+			setErroMessages(e.getErros());
+		}
 		catch(DbException e) {
 			Alerts.showAlerts("Erro saving department", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -70,9 +76,16 @@ public class DepartmentFormController implements Initializable {
 	private Department getFormData() {
 		Department obj = new Department();
 		
-		obj.setId(Utils.tryParseInteger(txtId.getText()));
-		obj.setName(txtName.getText());
+		ValidationException exception = new ValidationException("Validation erro");
 		
+		obj.setId(Utils.tryParseInteger(txtId.getText()));
+		if(txtName.getText() == null || txtName.getText().trim().equals("")) {
+			exception.addErro("name", "Field can´t be empty");
+		}
+		obj.setName(txtName.getText());
+		if(exception.getErros().size()>0) {
+			throw exception;
+		}
 		return obj;
 	}
 
@@ -107,6 +120,13 @@ public class DepartmentFormController implements Initializable {
 	}
 	public void subscribeDataChangeListener(DataChangeListeners listener) {
 		dataChangeListeners.add(listener);
+	}
+	
+	private void setErroMessages(Map<String, String> erros) {
+		Set<String> fields = erros.keySet();
+		if(fields.contains("name")) {
+			labelErroName.setText(erros.get("name"));
+		}
 	}
 
 }
