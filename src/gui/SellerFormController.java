@@ -1,9 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -115,6 +117,26 @@ public class SellerFormController implements Initializable {
 			exception.addErro("name", "Field can´t be empty");
 		}
 		obj.setName(txtName.getText());
+		
+		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
+			exception.addErro("email", "Field can´t be empty");
+		}
+		obj.setEmail(txtEmail.getText());
+		
+		if(dpBirthDate.getValue() == null) {
+			exception.addErro("birthDate", "Field can´t be empty");
+		}
+		else {
+		Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault())); //pegar o valor que esta no datepieacker
+		obj.setBirthDate(Date.from(instant));
+		}
+		if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) {
+			exception.addErro("baseSalary", "Field can´t be empty");
+		}
+		obj.setBaseSalary(Utils.tryParseDouble(txtBaseSalary.getText()));
+		
+		obj.setDepartment(comboBoxDepartment.getValue());
+		
 		if (exception.getErros().size() > 0) {
 			throw exception;
 		}
@@ -172,10 +194,15 @@ public class SellerFormController implements Initializable {
 	}
 
 	private void setErroMessages(Map<String, String> erros) {
-		Set<String> fields = erros.keySet();
-		if (fields.contains("name")) {
-			labelErroName.setText(erros.get("name"));
-		}
+		Set<String> fields = erros.keySet();					
+			labelErroName.setText(fields.contains("name") ? erros.get("name") : ""); 
+				//entre parenteses: if condição for verdadeira faça isso, do contrario (:) faça isso;
+			
+			labelErroEmail.setText(fields.contains("email") ?erros.get("email") : "");
+		
+			labelErroBaseSalary.setText(fields.contains("baseSalary") ? erros.get("baseSalary") : "");
+			labelErroBirthDate.setText(fields.contains("birthDate") ? erros.get("birthDate") : "");
+		
 	}
 
 	public void loadAssociatedObjects() {
