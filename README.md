@@ -6,13 +6,12 @@ Workshop é uma aplicação full-stack construída durante o curso de Java do pr
 
 O projeto consiste em criar uma aplicação desktop conectada a um banco de dados local já existente para registrar (criar) novos vendedores e/ou departamentos, além de ser possivel remover e editar. 
 
-## Layout web
-![Web 1](https://github.com/josuejhoseff/Workshop-SpringBoot3-JPA/blob/master/assets/web1.png)
+## Layout Desktop
+![Desktop 1](https://github.com/josuejhoseff/FirstProjectJavafx/blob/master/assets/desktop1.png)
 
-![Web 2](https://github.com/josuejhoseff/Workshop-SpringBoot3-JPA/blob/master/assets/web2.png)
+![Seller](https://github.com/josuejhoseff/FirstProjectJavafx/blob/master/assets/seller.png)
 
-## Modelo conceitual
-![Modelo Conceitual](https://github.com/josuejhoseff/Workshop-SpringBoot3-JPA/blob/master/assets/ProjetoUML.PNG)
+![Department](https://github.com/josuejhoseff/FirstProjectJavafx/blob/master/assets/department.png)
 
 # Tecnologias utilizadas
 ## Back end
