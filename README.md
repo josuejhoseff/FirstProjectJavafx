@@ -20,6 +20,10 @@ O projeto consiste em criar uma aplicação desktop conectada a um banco de dado
 - MySQL
 - Workbench
 
+## Front end
+- SceneBuilder
+- JavaFX
+
 # Como executar o projeto
 
 Pré-requisitos:
